@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memories</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --black: #121212;
+            --dark-gray: #1e1e1e;
+            --pink: #e91e63;
+            --light-pink: #ff80ab;
+            --white: #ffffff;
+        }
+
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .section-title p {
+            color: var(--light-pink);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--pink);
+        }
+
+        header {
+            background-color: rgba(18, 18, 18, 0.9);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .logo span {
+            color: var(--pink);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: var(--white);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--pink);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--pink);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://h.top4top.io/p_3621xddaq1.jpeg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--white);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 span {
+            color: var(--pink);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--light-pink);
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--pink);
+            color: var(--white);
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid var(--pink);
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--pink);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(233, 30, 99, 0.3);
+        }
+
+        .photo-catalogs {
+            background-color: var(--dark-gray);
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .catalog-item {
+            background-color: var(--black);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .catalog-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .catalog-img {
+            height: 200px;
+            overflow: hidden;
+            cursor: zoom-in;
+        }
+
+        .catalog-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .catalog-item:hover .catalog-img img {
+            transform: scale(1.1);
+        }
+
+        .catalog-content {
+            padding: 20px;
+        }
+
+        .catalog-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+
+        .catalog-content p {
+            color: var(--light-pink);
+            margin-bottom: 15px;
+        }
+
+        .music-catalogs {
+            background-color: var(--black);
+        }
+
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .music-item {
+            background-color: var(--dark-gray);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .music-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(233, 30, 99, 0.2);
+        }
+
+        .music-cover {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            cursor: zoom-in;
+        }
+
+        .music-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .music-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(233, 30, 99, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .music-item:hover .music-overlay {
+            opacity: 1;
+        }
+
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--pink);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .music-content {
+            padding: 20px;
+        }
+
+        .music-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+
+        .music-content p {
+            color: var(--light-pink);
+            margin-bottom: 15px;
+        }
+
+        .music-player {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: var(--dark-gray);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            padding: 15px;
+        }
+
+        .player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .player-header h4 {
+            color: var(--white);
+        }
+
+        .close-player {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .player-controls button {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .player-controls button:hover {
+            color: var(--pink);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: var(--pink);
+            transition: width 0.1s;
+        }
+
+        .time {
+            display: flex;
+            justify-content: space-between;
+            color: var(--light-pink);
+            font-size: 0.8rem;
+        }
+
+        .since-memories {
+            background-color: var(--dark-gray);
+        }
+
+        .memories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .memory-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+            position: relative;
+            cursor: zoom-in;
+        }
+
+        .memory-item:hover {
+            transform: scale(1.05);
+        }
+
+        .memory-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .memory-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(233, 30, 99, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .memory-item:hover .memory-overlay {
+            opacity: 1;
+        }
+
+        .memory-overlay i {
+            color: var(--white);
+            font-size: 2rem;
+        }
+
+        .photo-lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(0, 0, 0, 0.9);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .photo-lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .photo-lightbox img {
+            max-width: 100%;
+            max-height: 88vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 50%;
+            background: var(--pink);
+            color: var(--white);
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .lightbox-close:hover {
+            transform: scale(1.08);
+            background: var(--light-pink);
+        }
+
+        footer {
+            background-color: var(--black);
+            padding: 50px 0 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+
+        .footer-logo span {
+            color: var(--pink);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            margin: 0 15px;
+            color: var(--light-pink);
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--pink);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            background: var(--dark-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            color: var(--white);
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: var(--pink);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            color: var(--light-pink);
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            nav {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--dark-gray);
+                padding: 20px;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s;
+                visibility: hidden;
+            }
+
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                padding: 10px 25px;
+            }
+
+            .music-player {
+                width: calc(100% - 40px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">歌墨澈<span>.</span></a>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#photo-catalogs">Photo Catalogs</a></li>
+                    <li><a href="#music-catalogs">Music Catalogs</a></li>
+                    <li><a href="#since-memories">Since Memories</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Welcome to<span> Gea</span> & Amorta</h1>
+            <p>A Collection of Moments We’ll Never Forget</p>
+            <a href="#photo-catalogs" class="btn pulse">Explore Now</a>
+        </div>
+    </section>
+    <section class="photo-catalogs" id="photo-catalogs">
+        <div class="container">
+            <div class="section-title">
+                <h2>Photo Catalogs</h2>
+                <p>Not Just a Photo, This Is Proof We Were Once That Happy</p>
+            </div>
+            <div class="catalog-grid">  
+                <div class="catalog-item">
+                    <div class="catalog-img">
+                        <img src="https://i.ibb.co.com/bjp8PpMd/20251219-205226.jpg" alt="Mountain Landscape">
+                    </div>
+                    <div class="catalog-content">
+                        <h3>Dinner</h3>
+                        <p>An unforgettable dinner filled with laughter and stories.</p>
+                        <a href="#" class="btn">View Gallery</a>
+                    </div>
+                </div>
+                <div class="catalog-item">
+                    <div class="catalog-img">
+                        <img src="https://i.ibb.co.com/XxWB9ddr/IMG-20260506-WA0149.jpg" alt="Forest">
+                    </div>
+                    <div class="catalog-content">
+                        <h3>Graduation</h3>
+                        <p>A glimpse into our favorite moments together.</p>
+                        <a href="#" class="btn">View Gallery</a>
+                    </div>
+                </div>
+                <div class="catalog-item">
+                    <div class="catalog-img">
+                        <img src="https://a.top4top.io/p_3624j5buu1.jpg" alt="Sky">
+                    </div>
+                    <div class="catalog-content">
+                        <h3>Cinema</h3>
+                        <p>A perfect movie night shared together in the cinema.</p>
+                        <a href="#" class="btn">View Gallery</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="music-catalogs" id="music-catalogs">
+        <div class="container">
+            <div class="section-title">
+                <h2>Music Catalogs</h2>
+                <p>Enjoy Our Favorite Songs While Reliving Every Memory</p>
+            </div>
+            <div class="music-grid">
+                <div class="music-item">
+                    <div class="music-cover">
+                        <img src="https://l.top4top.io/p_36247wr3u1.jpg" alt="Album 1">
+                        <div class="music-overlay">
+                            <div class="play-btn" data-src="https://j.top4top.io/m_3623l0nc21.mp3">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="music-content">
+                        <h3>Kasih Putih</h3>
+                        <p>Glenn Fredly</p>
+                    </div>
+                </div>
+                <div class="music-item">
+                    <div class="music-cover">
+                        <img src="https://i.ibb.co.com/dswxw4DD/October-31-2025-You-Tube.jpg" alt="Album 2">
+                        <div class="music-overlay">
+                            <div class="play-btn" data-src="https://h.top4top.io/m_3621w00gl1.mp3">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="music-content">
+                        <h3>A Thousand YearsS</h3>
+                        <p>Christina Perri</p>
+                    </div>
+                </div>
+                <div class="music-item">
+                    <div class="music-cover">
+                        <img src="https://b.top4top.io/p_3623d5ozp1.jpeg" alt="Album 3">
+                        <div class="music-overlay">
+                            <div class="play-btn" data-src="https://h.top4top.io/m_3623z7evo1.mp3">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="music-content">
+                        <h3>Free</h3>
+                        <p>Rumi & Jinu - Free KPop Demon Hunters</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="music-player" id="music-player">
+        <div class="player-header">
+            <h4 id="player-title">Now Playing</h4>
+            <button class="close-player"><i class="fas fa-times"></i></button>
+        </div>
+        <audio id="audio-player" controls style="display: none;"></audio>
+        <div class="player-controls">
+            <button id="prev-btn"><i class="fas fa-step-backward"></i></button>
+            <button id="play-pause-btn"><i class="fas fa-play"></i></button>
+            <button id="next-btn"><i class="fas fa-step-forward"></i></button>
+        </div>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <div class="time">
+            <span id="current-time">0:00</span>
+            <span id="duration">0:00</span>
+        </div>
+    </div>
+    <div class="photo-lightbox" id="photo-lightbox" aria-hidden="true">
+        <button class="lightbox-close" type="button" aria-label="Close full photo">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="lightbox-photo" src="" alt="Full photo">
+    </div>
+    <section class="since-memories" id="since-memories">
+        <div class="container">
+            <div class="section-title">
+                <h2>Since Memories</h2>
+                <p>A Small Collection of Our Favorite Memories</p>
+            </div>
+            <div class="memories-grid">
+                <div class="memory-item">
+                    <img src="https://i.ibb.co.com/cSVjjZtM/2026-0427-11434000.jpg" alt="Memory 1">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="https://i.ibb.co.com/TBq6B9FD/2026-0427-11311200.jpg" alt="Memory 2">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="https://i.ibb.co.com/HDmhJLhF/2026-0427-11372000.jpg" alt="Memory 3">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="https://i.ibb.co.com/fGQFkSXh/2026-0427-11402500.jpg" alt="Memory 4">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="https://i.ibb.co.com/xtC22PMH/IMG-20260427-WA0040.jpg" alt="Memory 5">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="https://i.ibb.co.com/YF6YJH6Y/20251121-182751.jpg" alt="Memory 6">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="https://i.ibb.co.com/ZtkxCjd/20251210-175003.jpg" alt="Memory 7">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="https://i.ibb.co.com/4RtZrMZm/20251004-181941.jpg" alt="Memory 8">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+				<div class="memory-item">
+                    <img src="https://i.ibb.co.com/4gDcFvZB/20251210-175110.jpg" alt="Memory 8">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+				<div class="memory-item">
+                    <img src="https://i.ibb.co.com/ksxdjv7N/IMG-20251203-WA0011.jpg" alt="Memory 8">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+				<div class="memory-item">
+                    <img src="https://i.ibb.co.com/R42LSn0P/20251121-173009.jpg" alt="Memory 8">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+				<div class="memory-item">
+                    <img src="https://i.ibb.co.com/TMc8J4DS/20251004-195147.jpg" alt="Memory 8">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+				<div class="memory-item">
+                    <img src="https://i.ibb.co.com/yMD2WwV/20251001-083522.jpg" alt="Memory 8">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+				<div class="memory-item">
+                    <img src="https://i.ibb.co.com/W4THR12F/IMG-20251210-WA0077.jpg" alt="Memory 8">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+				<div class="memory-item">
+                    <img src="https://i.ibb.co.com/vCyqpv5k/IMG-20251203-WA0007.jpg" alt="Memory 8">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+				<div class="memory-item">
+                    <img src="https://i.ibb.co.com/M5QYVXqH/20251004-194951.jpg" alt="Memory 8">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+				<div class="memory-item">
+                    <img src="https://i.ibb.co.com/S7dcjbQz/IMG-20260514-WA0050.jpg" alt="Memory 8">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+				<div class="memory-item">
+                    <img src="https://i.ibb.co.com/wZZBjKPF/20251019-134310.jpg" alt="Memory 8">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+				<div class="memory-item">
+                    <img src="https://i.ibb.co.com/MyMmQZYF/IMG-20260210-WA0116.jpg" alt="Memory 8">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+				<div class="memory-item">
+                    <img src="https://i.ibb.co.com/p65W9X3B/IMG-20260103-WA0015.jpg" alt="Memory 8">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">歌墨澈<span>.</span></div>
+                <p>Preserving memories through immersive visuals and meaningful moments.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#photo-catalogs">Photo Catalogs</a>
+                <a href="#music-catalogs">Music Catalogs</a>
+                <a href="#since-memories">Since Memories</a>
+                <a href="https://www.instagram.com/i_xiao_chen?igsh=NzgzMGs2cDZzeXRx">Contact</a>
+            </div>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/i_xiao_chen?igsh=NzgzMGs2cDZzeXRx"><i class="fab fa-instagram"></i></a>
+                <a href="https://open.spotify.com/playlist/5ps0AkwIylLBgJ6uPIGNn3?si=588416fc0b4b4f43"><i class="fab fa-spotify"></i></a>
+            </div>
+            <div class="copyright">
+                &copy; 2025 - 2026 Amorta & Gea
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+        const playButtons = document.querySelectorAll('.play-btn');
+        const musicPlayer = document.getElementById('music-player');
+        const audioPlayer = document.getElementById('audio-player');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const closePlayer = document.querySelector('.close-player');
+        const progress = document.getElementById('progress');
+        const currentTimeEl = document.getElementById('current-time');
+        const durationEl = document.getElementById('duration');
+        const playerTitle = document.getElementById('player-title');
+        const photoLightbox = document.getElementById('photo-lightbox');
+        const lightboxPhoto = document.getElementById('lightbox-photo');
+        const lightboxClose = document.querySelector('.lightbox-close');
+
+        let currentTrackIndex = 0;
+        const tracks = [
+            { src: 'https://j.top4top.io/m_3623l0nc21.mp3', title: 'Ambient Dreams' },
+            { src: 'https://h.top4top.io/m_3621w00gl1.mp3', title: 'A Thousand years' },
+            { src: 'https://h.top4top.io/m_3623z7evo1.mp3', title: 'Free' }
+        ];
+
+        playButtons.forEach((button, index) => {
+            button.addEventListener('click', (event) => {
+                event.stopPropagation();
+                currentTrackIndex = index;
+                loadTrack(currentTrackIndex);
+                musicPlayer.style.display = 'block';
+                playTrack();
+            });
+        });
+        function openPhotoLightbox(img) {
+            lightboxPhoto.src = img.src;
+            lightboxPhoto.alt = img.alt || 'Full photo';
+            photoLightbox.classList.add('active');
+            photoLightbox.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePhotoLightbox() {
+            photoLightbox.classList.remove('active');
+            photoLightbox.setAttribute('aria-hidden', 'true');
+            lightboxPhoto.src = '';
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('.catalog-img img, .memory-item img, .music-cover img').forEach(img => {
+            img.addEventListener('click', (event) => {
+                event.stopPropagation();
+                openPhotoLightbox(img);
+            });
+        });
+
+        document.querySelectorAll('.catalog-img, .memory-item, .music-cover').forEach(photoContainer => {
+            photoContainer.addEventListener('click', (event) => {
+                if (event.target.closest('.play-btn')) return;
+                const img = photoContainer.querySelector('img');
+                if (img) openPhotoLightbox(img);
+            });
+        });
+
+        lightboxClose.addEventListener('click', closePhotoLightbox);
+
+        photoLightbox.addEventListener('click', (event) => {
+            if (event.target === photoLightbox) {
+                closePhotoLightbox();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && photoLightbox.classList.contains('active')) {
+                closePhotoLightbox();
+            }
+        });
+
+        function loadTrack(index) {
+            audioPlayer.src = tracks[index].src;
+            playerTitle.textContent = `Now Playing: ${tracks[index].title}`;
+            audioPlayer.load();
+        }
+
+        function playTrack() {
+            audioPlayer.play();
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+
+        function pauseTrack() {
+            audioPlayer.pause();
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        }
+
+        playPauseBtn.addEventListener('click', () => {
+            if (audioPlayer.paused) {
+                playTrack();
+            } else {
+                pauseTrack();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            currentTrackIndex--;
+            if (currentTrackIndex < 0) {
+                currentTrackIndex = tracks.length - 1;
+            }
+            loadTrack(currentTrackIndex);
+            playTrack();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentTrackIndex++;
+            if (currentTrackIndex >= tracks.length) {
+                currentTrackIndex = 0;
+            }
+            loadTrack(currentTrackIndex);
+            playTrack();
+        });
+
+        closePlayer.addEventListener('click', () => {
+            musicPlayer.style.display = 'none';
+            pauseTrack();
+        });
+
+        audioPlayer.addEventListener('timeupdate', () => {
+            const { currentTime, duration } = audioPlayer;
+            if (duration) {
+                const progressPercent = (currentTime / duration) * 100;
+                progress.style.width = `${progressPercent}%`;
+                
+                const formatTime = (time) => {
+                    const minutes = Math.floor(time / 60);
+                    const seconds = Math.floor(time % 60);
+                    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                };
+                
+                currentTimeEl.textContent = formatTime(currentTime);
+                durationEl.textContent = formatTime(duration);
+            }
+        });
+
+        const progressBar = document.querySelector('.progress-bar');
+        progressBar.addEventListener('click', (e) => {
+            const width = progressBar.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audioPlayer.duration;
+            
+            audioPlayer.currentTime = (clickX / width) * duration;
+        });
+
+        audioPlayer.addEventListener('ended', () => {
+            nextBtn.click();
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 1s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.catalog-item, .music-item, .memory-item').forEach(el => {
+            el.style.opacity = '0';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
